@@ -16,13 +16,13 @@ knitr::opts_chunk$set(echo = TRUE)
 #### Load required libraries
 
 ```{r lib, message=FALSE, warning=FALSE}
-library(dplyr)
-library(vegan)
-library(RColorBrewer)
-library(ggplot2)
-library(readxl)
-library(ggpubr)
-library(knitr)
+library(dplyr); packageVersion("dplyr")
+library(vegan); packageVersion("vegan")
+library(RColorBrewer); packageVersion("RColorBrewer")
+library(ggplot2); packageVersion("ggplot2")
+library(readxl); packageVersion("readxl")
+library(ggpubr); packageVersion("ggpubr")
+library(knitr);packageVersion("knitr")
 ```
 
 <br>
