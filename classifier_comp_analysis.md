@@ -15,13 +15,59 @@ output:
 
 
 ```r
-library(dplyr)
-library(vegan)
-library(RColorBrewer)
-library(ggplot2)
-library(readxl)
-library(ggpubr)
-library(knitr)
+library(dplyr); packageVersion("dplyr")
+```
+
+```
+## [1] '0.8.5'
+```
+
+```r
+library(vegan); packageVersion("vegan")
+```
+
+```
+## [1] '2.5.6'
+```
+
+```r
+library(RColorBrewer); packageVersion("RColorBrewer")
+```
+
+```
+## [1] '1.1.2'
+```
+
+```r
+library(ggplot2); packageVersion("ggplot2")
+```
+
+```
+## [1] '3.3.0'
+```
+
+```r
+library(readxl); packageVersion("readxl")
+```
+
+```
+## [1] '1.3.1'
+```
+
+```r
+library(ggpubr); packageVersion("ggpubr")
+```
+
+```
+## [1] '0.3.0'
+```
+
+```r
+library(knitr);packageVersion("knitr")
+```
+
+```
+## [1] '1.28'
 ```
 
 <br>
