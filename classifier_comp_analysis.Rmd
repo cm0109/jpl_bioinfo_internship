@@ -1,0 +1,392 @@
+---
+title: "Classifier_comp_analysis"
+author: "Chiranjit Mukherjee"
+date: "8/13/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+#### Load required libraries
+
+```{r lib, message=FALSE, warning=FALSE}
+library(dplyr)
+library(vegan)
+library(RColorBrewer)
+library(ggplot2)
+library(readxl)
+library(ggpubr)
+library(knitr)
+```
+
+<br>
+
+#### Load custom functions
+
+```{r}
+# Custom function for melting bc distances
+melt.dist <- function(x,only_identity = FALSE,omit_identity=TRUE) {
+  library(reshape2)
+  if(!is.matrix(x)) {
+    x <- as.matrix(x)
+  }
+  y <- melt(x)
+  if(omit_identity) {
+    l <- list();
+    nr <- nrow(x);
+    nin <- c();
+    for(i in 0:(nr - 1)){
+      rs <- (i * nr)+1;
+      if(only_identity==FALSE) {
+        l[[i+1]] <- (rs+i):(rs+nr-1)
+      } else {
+        l[[i+1]] <- (rs+i)
+      }
+    }
+    l <- -c(unlist(l))
+    y <- y[l,]
+  }
+  return(y)
+}
+
+# Custom function for importing report files (3 arguments, file names, how many characters to keep, include header or not)
+my_read_txt <- function(x, n, h) {
+  out <- read.delim(x, sep = "\t", quote = "", stringsAsFactors = FALSE, header = h)
+  sample <- substr(basename(x), 1, n) # basename removes directory, and substr selects 1:7 characters here
+  cbind(sample=sample, out) # adding sample name as a column
+}
+
+```
+
+<br>
+<br>
+
+### Input Zymo mmc data
+
+```{r}
+zymo_mmc_levels <- read.delim("zymo_mmc_logII.txt", sep = "\t", quote = "", stringsAsFactors = FALSE)
+zymo_pct <- zymo_mmc_levels
+colnames(zymo_pct) <- c("Var1", "Var2", "value") # For combining with others down the line
+```
+
+<br>
+
+### Input sample metadata
+
+```{r}
+meta <- read_excel("pipeline_comp_meta.xlsx")
+sample_desc <- read_excel("sample_desc.xlsx")
+kable(sample_desc, caption = "Sample Details")
+```
+
+<br>
+
+#### **We have 4 samples which are from Zymo Model Microbial Communities (MMC)**. 
+**Sample 1** and **Sample 2** are 2 unique such samples. They are a known mix of 10 species of bacteria and fungi. So, for these samples we know what exact species to expect. 
+**Sample 3** is a technical replicate of sample 1, we wanted to see how well the software performs with 2 exact replicas. 
+**Sample 4** is also a MMC sample, but it has been diluted with water, which introduces some contaminants in it, so we expect to find more than just the 10 listed species there.
+
+<br>
+
+#### **Sample 5-8** are **Synthetic Metagenomes**. 
+These samples were artifically created by cutting genomes into pieces computationally. We know exactly what species, and how much of each, are present. 
+Samples 5 & 6 have an even distribution of the constituent species. 
+Samples 7 and 8 have a staggard distribution. 
+Samples 6 & 8 are "perfect" samples, while 5 & 7 are made to replicate how sequencing errors might look like.
+
+<br>
+<br>
+
+## Read synthetic metagenome sample (sample 5:8) original data
+
+```{r, message=FALSE, warning=FALSE}
+# Input synthetic reads
+syn.tax <- read.delim("target-genome-info.tsv", sep = "\t", quote = "", stringsAsFactors = FALSE)
+
+# List all files in the bracken_out directory
+syn_files <- list.files(path="synthetic_samples", pattern="*.tsv", full.names=TRUE)
+
+# Load tables & clean columns
+syn.m <- bind_rows(lapply(syn_files, my_read_txt, 8, FALSE)) # apply the custom txt reading function to each file, and bind the list by row
+colnames(syn.m) <- c("sample", "accession", "pct")
+syn.m$accession <- gsub(".fa", "", syn.m$accession)
+syn.m$accession <- gsub("-trimmed", "", syn.m$accession)
+syn.m$species <- syn.tax$specific_name[match(syn.m$accession, syn.tax$accession)]
+
+# Make species counts table for Kraken2 
+syn_pct <- dcast(syn.m, sample ~ species, sum, value.var = "pct")
+row.names(syn_pct) <- syn_pct$sample
+syn_pct$sample <- NULL
+syn_pct[is.na(syn_pct)] <- 0
+# dim(syn_pct) # 4 48
+
+# Order by abundance
+syn_pct <- syn_pct[, order(colMeans(syn_pct), decreasing = T)]
+
+# Display table
+kable(syn_pct[, c(1:6)])
+```
+
+<br>
+<br>
+
+## Import Bracken (& Kraken2) results
+
+
+```{r, message=FALSE, warning=FALSE}
+# Inpput Kracken2/Bracken results
+
+# List all files in the bracken_out directory
+brep_files <- list.files(path="bracken_out", pattern="*.txt", full.names=TRUE) 
+brep.m <- bind_rows(lapply(brep_files, my_read_txt, 7, TRUE)) # apply the custom txt reading function to each file, and bind the list by row
+
+# Make species counts table for Bracken estimates
+brep_counts <- dcast(brep.m, sample ~ name, sum, value.var = "new_est_reads")
+row.names(brep_counts) <- brep_counts$sample
+brep_counts$sample <- NULL
+brep_counts[is.na(brep_counts)] <- 0
+row.names(brep_counts) <- paste0(row.names(brep_counts), "_br")
+dim(brep_counts) # 8 5366
+
+# Convert to Relative Abundance
+brep_pct <- decostand(brep_counts, method = "total")
+
+# Make species counts table for Kraken2 
+k2rep_counts <- dcast(brep.m, sample ~ name, sum, value.var = "kraken_assigned_reads")
+row.names(k2rep_counts) <- k2rep_counts$sample
+k2rep_counts$sample <- NULL
+k2rep_counts[is.na(k2rep_counts)] <- 0
+row.names(k2rep_counts) <- paste0(row.names(k2rep_counts), "_k2")
+dim(k2rep_counts) # 8 5366
+
+# Convert to Relative Abundance
+k2rep_pct <- decostand(k2rep_counts, method = "total")
+
+# Order by abundance
+brep_pct <- brep_pct[, order(colMeans(brep_pct), decreasing = T)]
+
+# Check data
+kable(brep_pct[, c(1:6)])
+
+```
+
+
+<br>
+<br>
+
+## Import Ganon results
+
+
+```{r, message=FALSE, warning=FALSE}
+# List all files in the bracken_out directory
+gan_files <- list.files(path="ganon_out", pattern="*.txt", full.names=TRUE)
+gan_files
+
+# Read all files and add sample name column 
+gan.m <- bind_rows(lapply(gan_files, my_read_txt, 7, FALSE)) # apply the custom txt reading function to each file, and bind the list by row
+colnames(gan.m) <- c("sample", "rank", "target", "taxid_lineage", "target_scientific_name", "unique_assignments", "reads_assigned", 
+                     "cumulative_assignments", "cumulative_assignments_percent")
+gan.m <- gan.m[gan.m$rank == "species", c(1:6)]
+gan.m$unique_assignments <- as.numeric(gan.m$unique_assignments)
+
+# Make species counts table for Bracken estimates
+gan_counts <- dcast(gan.m, sample ~ target_scientific_name, sum, value.var = "unique_assignments")
+row.names(gan_counts) <- gan_counts$sample
+gan_counts$sample <- NULL
+gan_counts[is.na(gan_counts)] <- 0
+row.names(gan_counts) <- paste0(row.names(gan_counts), "_gan")
+dim(gan_counts) # 8 3450
+
+# Convert to Relative Abundance
+gan_pct <- decostand(gan_counts, method = "total")
+
+# Order by abundance
+gan_pct <- gan_pct[, order(colMeans(gan_pct), decreasing = T)]
+
+# Check data
+kable(gan_pct[, c(1:6)])
+```
+
+
+<br>
+<br>
+
+## Import Centrifuge results
+
+```{r, message=FALSE, warning=FALSE}
+# List all files in the directory
+cent_files <- list.files(path="cent_out", pattern="*.txt", full.names=TRUE)
+cent_files
+
+# Read all files and add sample name column 
+cent.m <- bind_rows(lapply(cent_files, my_read_txt, 7, FALSE)) # apply the custom txt reading function to each file, and bind the list by row
+colnames(cent.m) <- c("sample", "percent_frag", "numb_frag_clade", "numb_frag_taxon", "tax_rank", "taxid", "name")
+cent.m$name <- trimws(cent.m$name) # Remove leading whitespaces
+
+# Subset for species ranks
+cent.m <- cent.m[cent.m$tax_rank == "S",]
+cent.m$numb_frag_taxon <- as.numeric(cent.m$numb_frag_taxon)
+
+# Make species counts table for Bracken estimates
+cent_counts <- dcast(cent.m, sample ~ name, sum, value.var = "numb_frag_taxon")
+row.names(cent_counts) <- cent_counts$sample
+cent_counts$sample <- NULL
+cent_counts[is.na(cent_counts)] <- 0
+row.names(cent_counts) <- paste0(row.names(cent_counts), "_cent")
+dim(cent_counts) # 8 6119
+
+# Convert to Relative Abundance
+cent_pct <- decostand(cent_counts, method = "total")
+
+# Order by abundance
+cent_pct <- cent_pct[, order(colMeans(cent_pct), decreasing = T)]
+
+# Check data
+kable(cent_pct[, c(1:6)])
+```
+
+<br>
+<br>
+
+### Combine relative abundance data from all samples for comparison
+
+```{r}
+# Melt & Combine for comp
+all_samples_comp.m <- rbind(melt(as.matrix(syn_pct)), melt(as.matrix(k2rep_pct)), melt(as.matrix(brep_pct)), 
+                            melt(as.matrix(gan_pct)), melt(as.matrix(cent_pct)), zymo_pct)
+colnames(all_samples_comp.m) <- c("sample", "species", "relabs")
+unique(all_samples_comp.m$sample) # 37
+```
+
+<br>
+<br>
+
+## Distance Based Analysis
+<br>
+Using Bray-Curtis Dissimilarities to quantify difference in microbial composition among samples (Beta Diversity measure)
+```{r}
+# Make species counts table for Bracken estimates
+all_samples_comp_pct <- dcast(all_samples_comp.m, sample ~ species, sum, value.var = "relabs")
+row.names(all_samples_comp_pct) <- all_samples_comp_pct$sample
+all_samples_comp_pct$sample <- NULL
+all_samples_comp_pct[is.na(all_samples_comp_pct)] <- 0
+dim(all_samples_comp_pct) # 37 6779
+
+
+# Calculate distance
+all_samples.dist <- vegdist(all_samples_comp_pct, method = "bray")
+all_samples.dist.m <- melt.dist(all_samples.dist)
+colnames(all_samples.dist.m) <- c("samp1", "samp2", "dist")
+
+# Add sample info
+all_samples.dist.m$s1 <- meta$sample[match(all_samples.dist.m$samp1, meta$name)]
+all_samples.dist.m$s2 <- meta$sample[match(all_samples.dist.m$samp2, meta$name)]
+
+# Subset for same samples
+same_samp_dist <- all_samples.dist.m[all_samples.dist.m$s1 == all_samples.dist.m$s2, ]
+
+# Add type
+same_samp_dist$type1 <- meta$type[match(same_samp_dist$samp1, meta$name)]
+same_samp_dist$type2 <- meta$type[match(same_samp_dist$samp2, meta$name)]
+
+# Subset synth
+same_samp_dist_synth <- same_samp_dist[same_samp_dist$type1 == "synthetic", ]
+same_samp_dist_synth$syn_type <- sapply(strsplit(as.character(same_samp_dist_synth$samp1), "_"), `[`, 2)
+same_samp_dist_synth$syn_type <- gsub("err", "HiSeq Error", same_samp_dist_synth$syn_type)
+same_samp_dist_synth$syn_type <- gsub("per", "Perfect", same_samp_dist_synth$syn_type)
+
+# Add even info
+same_samp_dist_synth$even <- sapply(strsplit(as.character(same_samp_dist_synth$samp1), "_"), `[`, 1)
+
+# Set factor levels
+same_samp_dist_synth$type2 <- factor(same_samp_dist_synth$type2, levels = c("kraken2", "bracken", "ganon", "centrifuge"))
+```
+
+<br>
+<br>
+
+#### Box plot of distances between expected and predicted microbial communities for Synthetic Metagenomes
+
+```{r}
+# Plot
+ggplot(same_samp_dist_synth, aes(type2, dist)) + geom_boxplot(lwd=0.5) + scale_y_continuous(limits = c(0.50,0.70)) + 
+  geom_jitter(height = 0, width = 0.2, size=5, alpha=0.6, aes(col=syn_type, shape=even)) + 
+  stat_compare_means(label.x.npc = 0.2, col="firebrick4") + 
+  labs(col="Syn. Metagenome Type", x="", y="Bray-Curtis Dissimilarities\n", shape="Composition", title = "Accuracy Comparison: Synthetic Metagenomes") + 
+  theme_classic() + theme(axis.text.x = element_text(size=12, face="bold", color = "black"), legend.position = "right", panel.grid = element_blank(),
+                          axis.text.y = element_text(size=10, face="bold", color = "black"), plot.title = element_text(size=14, face="bold", hjust = 0.5),
+                          axis.title = element_text(size=14, color="black", face="bold"), legend.key.size =unit(0.2,"cm"))
+#ggsave(file="pipeline_accuracy_comp.pdf", width = 8, height = 6, units = "in")
+
+```
+
+<br>
+<br>
+
+## Compare the 4 MMC Samples
+
+```{r}
+# Sample 1, 2 and 3 are zymo MMC undiluted. 3 is replicate of 1.
+sample1234_pct <- all_samples_comp_pct[row.names(all_samples_comp_pct) %in% meta$name[meta$sample %in% c(1:4)], ]
+sample1234_pct <- sample1234_pct[, colSums(sample1234_pct) > 0]
+
+# Order species by abundance
+sample1234_pct <- sample1234_pct[, order(colMeans(sample1234_pct), decreasing = T)]
+
+# Zymo sp only
+sample1234_pct_zym <- sample1234_pct[, colnames(sample1234_pct) %in% zymo_mmc_levels$species]
+sample1234_pct_zym$Others <- rowSums(sample1234_pct[, !(colnames(sample1234_pct) %in% zymo_mmc_levels$species)])
+
+# Melt
+sample1234_pct_zym.m <- melt(as.matrix(sample1234_pct_zym))
+colnames(sample1234_pct_zym.m) <- c("name", "species", "pct")
+sample1234_pct_zym.m$pct <- sample1234_pct_zym.m$pct*100
+
+# Add sample info
+sample1234_pct_zym.m$sample <- meta$sample[match(sample1234_pct_zym.m$name, meta$name)]
+
+# For labels
+sample1234_pct_zym.m_oth <- sample1234_pct_zym.m[sample1234_pct_zym.m$species == "Others", ]
+
+# Set colors
+posctrl_colors = colorRampPalette(brewer.pal(12, "Set3"))
+
+```
+
+<br>
+<br>
+
+#### Bar Plot of relative abundances of the MMC samples
+
+```{r, fig.height = 5, fig.width = 14, fig.align = "center"}
+# Extraction Ctrl Barplot of rel abundance
+ggplot(sample1234_pct_zym.m, aes(name, pct)) + geom_bar(stat="identity", aes(fill=species), lwd=0.1, width = 0.75, color="black") + 
+  facet_grid(~sample, scales="free_x", space="free_x") + scale_fill_manual(values=c(posctrl_colors(ncol(sample1234_pct_zym)-1), "grey50")) + 
+  labs(x="", y ="Relative Abundance%\n", fill="", title = "Taxonomic Comparison: MMC Samples") + 
+  scale_y_continuous(expand=c(0,0.01)) + guides(fill=guide_legend(ncol=1)) + theme_bw() +
+  geom_text(data=sample1234_pct_zym.m_oth, aes(label=paste0(round(pct,1), "%"), y=2), size=3, color="white") +
+  theme(axis.text.x = element_text(size=12, face="bold", color = "black", angle=90, hjust = 1, vjust=0.5), legend.position = "right", panel.grid = element_blank(),
+        legend.text = element_text(face="italic"), axis.text.y = element_text(size=10, face="bold", color = "black"), 
+        plot.title = element_text(size=14, face="bold", hjust = 0.5),
+        axis.title = element_text(size=14, color="black", face="bold"))
+#ggsave(file="sample1234_relabs_sp_zym.pdf", width = 12, height = 6, units = "in")
+```
+
+
+
+## Resource Usage
+
+```{r, fig.height = 6, fig.width = 12, fig.align = "center"}
+resource_comp <- read_excel("resource_comp.xlsx")
+resource_comp.m <- melt(resource_comp)
+
+ggplot(resource_comp.m, aes(tool, value)) + geom_bar(stat = "identity", position = "dodge", aes(fill=tool)) + facet_wrap(~variable, scales="free_y")
+
+```
+
+
+

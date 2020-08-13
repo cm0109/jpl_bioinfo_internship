@@ -1,0 +1,61 @@
+accession	taxid	org_name	domain	phylum	class	order	family	genus	specific_name
+GCF_000006765.1	208964	Pseudomonas aeruginosa PAO1	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa
+GCF_000014625.1	208963	Pseudomonas aeruginosa UCBPP-PA14	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas aeruginosa
+GCF_000007645.1	176280	Staphylococcus epidermidis ATCC 12228	Bacteria	Firmicutes	Bacilli	Bacillales	Staphylococcaceae	Staphylococcus	Staphylococcus epidermidis
+GCF_000011925.1	176279	Staphylococcus epidermidis RP62A	Bacteria	Firmicutes	Bacilli	Bacillales	Staphylococcaceae	Staphylococcus	Staphylococcus epidermidis
+GCF_000023205.1	465515	Micrococcus luteus NCTC 2665	Bacteria	Actinobacteria	Actinobacteria	Micrococcales	Micrococcaceae	Micrococcus	Micrococcus luteus
+GCF_000176875.1	596312	Micrococcus luteus SK58	Bacteria	Actinobacteria	Actinobacteria	Micrococcales	Micrococcaceae	Micrococcus	Micrococcus luteus
+GCF_000275465.1	1156918	Alcaligenes faecalis subsp. faecalis NCIB 8687	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Alcaligenaceae	Alcaligenes	Alcaligenes faecalis
+GCF_000739855.1	1218102	Alcaligenes faecalis subsp. faecalis NBRC 13111	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Alcaligenaceae	Alcaligenes	Alcaligenes faecalis
+GCF_000262005.1	1123524	Pseudomonas monteilii QM	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas monteilii
+GCF_000510285.1	1435044	Pseudomonas monteilii SB3078	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas monteilii
+GCF_000006605.1	306537	Corynebacterium jeikeium K411	Bacteria	Actinobacteria	Actinobacteria	Corynebacteriales	Corynebacteriaceae	Corynebacterium	Corynebacterium jeikeium
+GCF_000163435.1	525262	Corynebacterium jeikeium ATCC 43734	Bacteria	Actinobacteria	Actinobacteria	Corynebacteriales	Corynebacteriaceae	Corynebacterium	Corynebacterium jeikeium
+GCF_000261545.1	1128253	Bradyrhizobium japonicum CCBAU 15354	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Bradyrhizobiaceae	Bradyrhizobium	Bradyrhizobium japonicum
+GCF_000261565.1	1128254	Bradyrhizobium japonicum CCBAU 15517	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Bradyrhizobiaceae	Bradyrhizobium	Bradyrhizobium japonicum
+GCF_001553955.1	34062	Moraxella osloensis	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella osloensis
+GCF_001679175.1	34062	Moraxella osloensis	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Moraxellaceae	Moraxella	Moraxella osloensis
+GCF_000224695.1	1074493	Sphingobium yanoikuyae XLDN2-5	Bacteria	Proteobacteria	Alphaproteobacteria	Sphingomonadales	Sphingomonadaceae	Sphingobium	Sphingobium yanoikuyae
+GCF_000315525.1	883163	Sphingobium yanoikuyae ATCC 51230	Bacteria	Proteobacteria	Alphaproteobacteria	Sphingomonadales	Sphingomonadaceae	Sphingobium	Sphingobium yanoikuyae
+GCF_000015325.1	397945	Acidovorax citrulli AAC00-1	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Comamonadaceae	Acidovorax	Acidovorax citrulli
+GCF_000948135.1	80869	Acidovorax citrulli	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Comamonadaceae	Acidovorax	Acidovorax citrulli
+GCF_000953875.1	105219	Ralstonia mannitolilytica	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Burkholderiaceae	Ralstonia	Ralstonia mannitolilytica
+GCF_000954135.1	105219	Ralstonia mannitolilytica	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Burkholderiaceae	Ralstonia	Ralstonia mannitolilytica
+GCF_001612705.2	515393	Pseudomonas yamanorum	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas yamanorum
+GCF_013386005.1	515393	Pseudomonas yamanorum	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	Pseudomonas	Pseudomonas yamanorum
+GCF_000353565.1	1300222	Brevibacillus borstelensis AK1	Bacteria	Firmicutes	Bacilli	Bacillales	Paenibacillaceae	Brevibacillus	Brevibacillus borstelensis
+GCF_000023145.1	645127	Corynebacterium kroppenstedtii DSM 44385	Bacteria	Actinobacteria	Actinobacteria	Corynebacteriales	Corynebacteriaceae	Corynebacterium	Corynebacterium kroppenstedtii
+GCF_000023925.1	478801	Kytococcus sedentarius DSM 20547	Bacteria	Actinobacteria	Actinobacteria	Micrococcales	Dermacoccaceae	Kytococcus	Kytococcus sedentarius
+GCF_000463665.1	1160719	Cutibacterium granulosum DSM 20700	Bacteria	Actinobacteria	Actinobacteria	Propionibacteriales	Propionibacteriaceae	Cutibacterium	Cutibacterium granulosum
+GCF_001639025.1	144183	Corynebacterium afermentans subsp. afermentans	Bacteria	Actinobacteria	Actinobacteria	Corynebacteriales	Corynebacteriaceae	Corynebacterium	Corynebacterium afermentans
+GCF_000590985.1	1457173	Comamonas aquatica DA1877	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Comamonadaceae	Comamonas	Comamonas aquatica
+GCF_000230995.2	754035	Mesorhizobium australicum WSM2073	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Phyllobacteriaceae	Mesorhizobium	Mesorhizobium australicum
+GCF_000956065.1	9545	Macaca nemestrina	Eukaryota	Chordata	Mammalia	Primates	Cercopithecidae	Macaca	Macaca nemestrina
+GCF_002930615.1	1452508	Zhizhongheella caldifontis	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Comamonadaceae	Zhizhongheella	Zhizhongheella caldifontis
+GCF_000263375.1	671144	Wallemia mellicola CBS 633.66	Eukaryota	Basidiomycota	Wallemiomycetes	Wallemiales	Wallemiaceae	Wallemia	Wallemia mellicola
+GCF_004128135.1	2499625	Stemphylium lycopersici mycovirus	Viruses	NA	NA	NA	NA	NA	Stemphylium lycopersici mycovirus
+GCF_002734245.1	2044603	Sphingobacterium sp. 1.A.4	Bacteria	Bacteroidetes	Sphingobacteriia	Sphingobacteriales	Sphingobacteriaceae	Sphingobacterium	Sphingobacterium sp. 1.A.4
+GCF_000374045.1	1123248	Segetibacter koreensis DSM 18137	Bacteria	Bacteroidetes	Chitinophagia	Chitinophagales	Chitinophagaceae	Segetibacter	Segetibacter koreensis
+GCF_001029505.1	909625	Rubrobacter aplysinae	Bacteria	Actinobacteria	Rubrobacteria	Rubrobacterales	Rubrobacteraceae	Rubrobacter	Rubrobacter aplysinae
+GCF_000711725.1	1123060	Roseomonas aerilata DSM 19363	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	Acetobacteraceae	Roseomonas	Roseomonas aerilata
+GCF_900110395.1	1380357	Rhodospirillales bacterium URHD0017	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	NA	NA	Rhodospirillales bacterium URHD0017
+GCF_900167565.1	428993	Pseudoxanthomonas indica	Bacteria	Proteobacteria	Gammaproteobacteria	Xanthomonadales	Xanthomonadaceae	Pseudoxanthomonas	Pseudoxanthomonas indica
+GCF_002880775.1	9601	Pongo abelii	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Pongo	Pongo abelii
+GCF_002188465.1	2008675	Pigmentiphaga sp. NML080357	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Alcaligenaceae	Pigmentiphaga	Pigmentiphaga sp. NML080357
+GCF_001426885.1	1736464	Pelomonas sp. Root1444	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Comamonadaceae	Pelomonas	Pelomonas sp. Root1444
+GCF_001425055.1	1736434	Pelomonas sp. Root1237	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Comamonadaceae	Pelomonas	Pelomonas sp. Root1237
+GCF_002205845.1	431059	Pelomonas puraquae	Bacteria	Proteobacteria	Betaproteobacteria	Burkholderiales	Comamonadaceae	Pelomonas	Pelomonas puraquae
+GCF_013052645.1	9597	Pan paniscus	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Pan	Pan paniscus
+GCF_000951045.1	9568	Mandrillus leucophaeus	Eukaryota	Chordata	Mammalia	Primates	Cercopithecidae	Mandrillus	Mandrillus leucophaeus
+GCF_000332975.1	1220583	Gordonia aichiensis NBRC 108223	Bacteria	Actinobacteria	Actinobacteria	Corynebacteriales	Gordoniaceae	Gordonia	Gordonia aichiensis
+GCF_001982645.1	1907940	Enhydrobacter sp. H5	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	NA	Enhydrobacter	Enhydrobacter sp. H5
+GCF_900167455.1	225324	Enhydrobacter aerosaccus	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	NA	Enhydrobacter	Enhydrobacter aerosaccus
+GCF_002849245.1	2065189	Dysgonamonadaceae bacterium	Bacteria	Bacteroidetes	Bacteroidia	Bacteroidales	Dysgonamonadaceae	NA	Dysgonamonadaceae bacterium
+GCF_000599865.1	1476583	Deinococcus phoenicis	Bacteria	Deinococcus-Thermus	Deinococci	Deinococcales	Deinococcaceae	Deinococcus	Deinococcus phoenicis
+GCF_000159635.1	525263	Corynebacterium lipophiloflavum DSM 44291	Bacteria	Actinobacteria	Actinobacteria	Corynebacteriales	Corynebacteriaceae	Corynebacterium	Corynebacterium lipophiloflavum
+GCF_000951035.1	336983	Colobus angolensis palliatus	Eukaryota	Chordata	Mammalia	Primates	Cercopithecidae	Colobus	Colobus angolensis
+GCF_000409795.2	60711	Chlorocebus sabaeus	Eukaryota	Chordata	Mammalia	Primates	Cercopithecidae	Chlorocebus	Chlorocebus sabaeus
+GCF_000733915.1	1382303	Caulobacteraceae bacterium PMMR1	Bacteria	Proteobacteria	Alphaproteobacteria	Caulobacterales	Caulobacteraceae	NA	Caulobacteraceae bacterium PMMR1
+GCF_000015165.1	288000	Bradyrhizobium sp. BTAi1	Bacteria	Proteobacteria	Alphaproteobacteria	Rhizobiales	Bradyrhizobiaceae	Bradyrhizobium	Bradyrhizobium sp. BTAi1
+GCF_000149205.2	227321	Aspergillus nidulans FGSC A4	Eukaryota	Ascomycota	Eurotiomycetes	Eurotiales	Aspergillaceae	Aspergillus	Aspergillus nidulans
+GCF_000245075.1	1054213	Acetobacteraceae bacterium AT-5844	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodospirillales	Acetobacteraceae	NA	Acetobacteraceae bacterium AT-5844

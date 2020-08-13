@@ -1,0 +1,11 @@
+sample	species	pct
+zymo_mmc	Listeria monocytogenes	0.891
+zymo_mmc	Pseudomonas aeruginosa	0.089
+zymo_mmc	Bacillus subtilis	0.0089
+zymo_mmc	Saccharomyces cerevisiae	0.0089
+zymo_mmc	Escherichia coli	0.00089
+zymo_mmc	Salmonella enterica	0.00089
+zymo_mmc	Lactobacillus fermentum	8.9e-05
+zymo_mmc	Enterococcus faecalis	8.9e-06
+zymo_mmc	Cryptococcus neoformans	8.9e-06
+zymo_mmc	Staphylococcus aureus	8.9e-07
