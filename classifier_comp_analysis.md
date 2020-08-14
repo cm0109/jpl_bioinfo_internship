@@ -129,23 +129,8 @@ colnames(zymo_pct) <- c("Var1", "Var2", "value") # For combining with others dow
 ```r
 meta <- read_excel("pipeline_comp_meta.xlsx")
 sample_desc <- read_excel("sample_desc.xlsx")
-kable(sample_desc, caption = "Sample Details")
+#kable(sample_desc, caption = "Sample Details")
 ```
-
-
-
-Table: Sample Details
-
-name      desc                       trimmed_reads
---------  ------------------------  --------------
-sample1   Zymo_mmc_05_1_undil              4283096
-sample2   Zymo_mmc_05_2_undil              4327888
-sample3   Zymo_mmc_05_1_undilcopy          4283096
-sample4   Zymo_mmc_06_1_diluted            5270348
-sample5   ML_even_hiseq_sim                4998731
-sample6   ML_even_perfect_sim              4998731
-sample7   ML_uneven_hiseq_sim              4998734
-sample8   ML_uneven_perfect_sim            4998734
 
 <br>
 
@@ -193,15 +178,8 @@ syn_pct[is.na(syn_pct)] <- 0
 syn_pct <- syn_pct[, order(colMeans(syn_pct), decreasing = T)]
 
 # Display table
-kable(syn_pct[, c(1:6)])
+#kable(syn_pct[, c(1:6)])
 ```
-
-            Alcaligenes faecalis   Mandrillus leucophaeus   Mesorhizobium australicum   Sphingobacterium sp. 1.A.4   Staphylococcus epidermidis   Ralstonia mannitolilytica
----------  ---------------------  -----------------------  --------------------------  ---------------------------  ---------------------------  --------------------------
-even_err               0.0333333                0.0166667                   0.0166667                    0.0166667                    0.0333333                   0.0333333
-even_per               0.0333333                0.0166667                   0.0166667                    0.0166667                    0.0333333                   0.0333333
-stag_err               0.0592251                0.0711611                   0.0691178                    0.0663078                    0.0434145                   0.0408736
-stag_per               0.0592251                0.0711611                   0.0691178                    0.0663078                    0.0434145                   0.0408736
 
 <br>
 <br>
@@ -223,14 +201,8 @@ row.names(brep_counts) <- brep_counts$sample
 brep_counts$sample <- NULL
 brep_counts[is.na(brep_counts)] <- 0
 row.names(brep_counts) <- paste0(row.names(brep_counts), "_br")
-dim(brep_counts) # 8 5366
-```
+#dim(brep_counts) # 8 5366
 
-```
-## [1]    8 5366
-```
-
-```r
 # Convert to Relative Abundance
 brep_pct <- decostand(brep_counts, method = "total")
 
@@ -238,19 +210,8 @@ brep_pct <- decostand(brep_counts, method = "total")
 brep_pct <- brep_pct[, order(colMeans(brep_pct), decreasing = T)]
 
 # Check data
-kable(brep_pct[, c(1:6)])
+#kable(brep_pct[, c(1:6)])
 ```
-
-              Homo sapiens   Lactobacillus fermentum   Salmonella enterica   Escherichia coli   Pseudomonas aeruginosa   Listeria monocytogenes
------------  -------------  ------------------------  --------------------  -----------------  -----------------------  -----------------------
-sample1_br       0.0722376                 0.1643045             0.1354720          0.1187102                0.0623060                0.1010660
-sample2_br       0.0182907                 0.1760192             0.1529426          0.1389259                0.0699399                0.1071486
-sample3_br       0.0722376                 0.1643045             0.1354720          0.1187102                0.0623060                0.1010660
-sample4_br       0.0604164                 0.1232946             0.1344693          0.1045271                0.0616600                0.0872228
-sample5_br       0.1191714                 0.0000003             0.0000389          0.0000950                0.0652800                0.0000044
-sample6_br       0.1190907                 0.0000000             0.0000227          0.0000901                0.0675425                0.0000047
-sample7_br       0.1685095                 0.0000003             0.0000346          0.0000517                0.0153391                0.0000037
-sample8_br       0.1677246                 0.0000000             0.0000187          0.0000540                0.0168036                0.0000029
 
 
 <br>
@@ -285,14 +246,8 @@ row.names(gan_counts) <- gan_counts$sample
 gan_counts$sample <- NULL
 gan_counts[is.na(gan_counts)] <- 0
 row.names(gan_counts) <- paste0(row.names(gan_counts), "_gan")
-dim(gan_counts) # 8 3450
-```
+#dim(gan_counts) # 8 3450
 
-```
-## [1]    8 3450
-```
-
-```r
 # Convert to Relative Abundance
 gan_pct <- decostand(gan_counts, method = "total")
 
@@ -300,19 +255,8 @@ gan_pct <- decostand(gan_counts, method = "total")
 gan_pct <- gan_pct[, order(colMeans(gan_pct), decreasing = T)]
 
 # Check data
-kable(gan_pct[, c(1:6)])
+#kable(gan_pct[, c(1:6)])
 ```
-
-               Lactobacillus fermentum   Listeria monocytogenes   Salmonella enterica   Enterococcus faecalis   Alcaligenes faecalis   Moraxella osloensis
-------------  ------------------------  -----------------------  --------------------  ----------------------  ---------------------  --------------------
-sample1_gan                  0.2881820                0.1743708             0.1580712               0.1140167              0.0002860             0.0000221
-sample2_gan                  0.2856433                0.1708909             0.1693516               0.1051977              0.0003631             0.0001242
-sample3_gan                  0.2881820                0.1743708             0.1580712               0.1140167              0.0002860             0.0000221
-sample4_gan                  0.2259734                0.1576569             0.1609495               0.0971979              0.0005950             0.0000757
-sample5_gan                  0.0000000                0.0000004             0.0000065               0.0000000              0.0690810             0.1055499
-sample6_gan                  0.0000000                0.0000000             0.0000078               0.0000000              0.0691389             0.1056169
-sample7_gan                  0.0000000                0.0000000             0.0000112               0.0000004              0.1194713             0.0675964
-sample8_gan                  0.0000000                0.0000000             0.0000151               0.0000000              0.1195075             0.0676703
 
 
 <br>
@@ -349,14 +293,8 @@ row.names(cent_counts) <- cent_counts$sample
 cent_counts$sample <- NULL
 cent_counts[is.na(cent_counts)] <- 0
 row.names(cent_counts) <- paste0(row.names(cent_counts), "_cent")
-dim(cent_counts) # 8 6119
-```
+#dim(cent_counts) # 8 6119
 
-```
-## [1]    8 6119
-```
-
-```r
 # Convert to Relative Abundance
 cent_pct <- decostand(cent_counts, method = "total")
 
@@ -364,19 +302,8 @@ cent_pct <- decostand(cent_counts, method = "total")
 cent_pct <- cent_pct[, order(colMeans(cent_pct), decreasing = T)]
 
 # Check data
-kable(cent_pct[, c(1:6)])
+#kable(cent_pct[, c(1:6)])
 ```
-
-                Homo sapiens   Lactobacillus fermentum   Listeria monocytogenes   Salmonella enterica   Enterococcus faecalis   Alcaligenes faecalis
--------------  -------------  ------------------------  -----------------------  --------------------  ----------------------  ---------------------
-sample1_cent       0.1224718                 0.2622438                0.1608562             0.1163070               0.1052551              0.0003150
-sample2_cent       0.0344582                 0.2962357                0.1789922             0.1405057               0.1105359              0.0004731
-sample3_cent       0.1224718                 0.2622438                0.1608562             0.1163070               0.1052551              0.0003150
-sample4_cent       0.1030041                 0.1931445                0.1366424             0.1097844               0.0842205              0.0007813
-sample5_cent       0.1531038                 0.0000126                0.0000126             0.0000345               0.0000053              0.0533062
-sample6_cent       0.1534780                 0.0000103                0.0000134             0.0000404               0.0000073              0.0535282
-sample7_cent       0.2284607                 0.0000121                0.0000089             0.0000339               0.0000089              0.0993442
-sample8_cent       0.2280644                 0.0000115                0.0000065             0.0000348               0.0000111              0.0995740
 
 <br>
 <br>

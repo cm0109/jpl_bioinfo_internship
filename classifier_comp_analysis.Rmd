@@ -82,7 +82,7 @@ colnames(zymo_pct) <- c("Var1", "Var2", "value") # For combining with others dow
 ```{r}
 meta <- read_excel("pipeline_comp_meta.xlsx")
 sample_desc <- read_excel("sample_desc.xlsx")
-kable(sample_desc, caption = "Sample Details")
+#kable(sample_desc, caption = "Sample Details")
 ```
 
 <br>
@@ -130,7 +130,7 @@ syn_pct[is.na(syn_pct)] <- 0
 syn_pct <- syn_pct[, order(colMeans(syn_pct), decreasing = T)]
 
 # Display table
-kable(syn_pct[, c(1:6)])
+#kable(syn_pct[, c(1:6)])
 ```
 
 <br>
@@ -152,7 +152,7 @@ row.names(brep_counts) <- brep_counts$sample
 brep_counts$sample <- NULL
 brep_counts[is.na(brep_counts)] <- 0
 row.names(brep_counts) <- paste0(row.names(brep_counts), "_br")
-dim(brep_counts) # 8 5366
+#dim(brep_counts) # 8 5366
 
 # Convert to Relative Abundance
 brep_pct <- decostand(brep_counts, method = "total")
@@ -161,8 +161,7 @@ brep_pct <- decostand(brep_counts, method = "total")
 brep_pct <- brep_pct[, order(colMeans(brep_pct), decreasing = T)]
 
 # Check data
-kable(brep_pct[, c(1:6)])
-
+#kable(brep_pct[, c(1:6)])
 ```
 
 
@@ -190,7 +189,7 @@ row.names(gan_counts) <- gan_counts$sample
 gan_counts$sample <- NULL
 gan_counts[is.na(gan_counts)] <- 0
 row.names(gan_counts) <- paste0(row.names(gan_counts), "_gan")
-dim(gan_counts) # 8 3450
+#dim(gan_counts) # 8 3450
 
 # Convert to Relative Abundance
 gan_pct <- decostand(gan_counts, method = "total")
@@ -199,7 +198,7 @@ gan_pct <- decostand(gan_counts, method = "total")
 gan_pct <- gan_pct[, order(colMeans(gan_pct), decreasing = T)]
 
 # Check data
-kable(gan_pct[, c(1:6)])
+#kable(gan_pct[, c(1:6)])
 ```
 
 
@@ -228,7 +227,7 @@ row.names(cent_counts) <- cent_counts$sample
 cent_counts$sample <- NULL
 cent_counts[is.na(cent_counts)] <- 0
 row.names(cent_counts) <- paste0(row.names(cent_counts), "_cent")
-dim(cent_counts) # 8 6119
+#dim(cent_counts) # 8 6119
 
 # Convert to Relative Abundance
 cent_pct <- decostand(cent_counts, method = "total")
@@ -237,7 +236,7 @@ cent_pct <- decostand(cent_counts, method = "total")
 cent_pct <- cent_pct[, order(colMeans(cent_pct), decreasing = T)]
 
 # Check data
-kable(cent_pct[, c(1:6)])
+#kable(cent_pct[, c(1:6)])
 ```
 
 <br>

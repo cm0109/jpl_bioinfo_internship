@@ -434,59 +434,7 @@ colnames(zymo_pct) &lt;- c(&quot;Var1&quot;, &quot;Var2&quot;, &quot;value&quot;
 <h3>Input sample metadata</h3>
 <pre class="r"><code>meta &lt;- read_excel(&quot;pipeline_comp_meta.xlsx&quot;)
 sample_desc &lt;- read_excel(&quot;sample_desc.xlsx&quot;)
-kable(sample_desc, caption = &quot;Sample Details&quot;)</code></pre>
-<table>
-<caption>Sample Details</caption>
-<thead>
-<tr class="header">
-<th align="left">name</th>
-<th align="left">desc</th>
-<th align="right">trimmed_reads</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">sample1</td>
-<td align="left">Zymo_mmc_05_1_undil</td>
-<td align="right">4283096</td>
-</tr>
-<tr class="even">
-<td align="left">sample2</td>
-<td align="left">Zymo_mmc_05_2_undil</td>
-<td align="right">4327888</td>
-</tr>
-<tr class="odd">
-<td align="left">sample3</td>
-<td align="left">Zymo_mmc_05_1_undilcopy</td>
-<td align="right">4283096</td>
-</tr>
-<tr class="even">
-<td align="left">sample4</td>
-<td align="left">Zymo_mmc_06_1_diluted</td>
-<td align="right">5270348</td>
-</tr>
-<tr class="odd">
-<td align="left">sample5</td>
-<td align="left">ML_even_hiseq_sim</td>
-<td align="right">4998731</td>
-</tr>
-<tr class="even">
-<td align="left">sample6</td>
-<td align="left">ML_even_perfect_sim</td>
-<td align="right">4998731</td>
-</tr>
-<tr class="odd">
-<td align="left">sample7</td>
-<td align="left">ML_uneven_hiseq_sim</td>
-<td align="right">4998734</td>
-</tr>
-<tr class="even">
-<td align="left">sample8</td>
-<td align="left">ML_uneven_perfect_sim</td>
-<td align="right">4998734</td>
-</tr>
-</tbody>
-</table>
+#kable(sample_desc, caption = &quot;Sample Details&quot;)</code></pre>
 <p><br></p>
 <div id="we-have-4-samples-which-are-from-zymo-model-microbial-communities-mmc." class="section level4">
 <h4><strong>We have 4 samples which are from Zymo Model Microbial Communities (MMC)</strong>.</h4>
@@ -525,58 +473,7 @@ syn_pct[is.na(syn_pct)] &lt;- 0
 syn_pct &lt;- syn_pct[, order(colMeans(syn_pct), decreasing = T)]
 
 # Display table
-kable(syn_pct[, c(1:6)])</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">Alcaligenes faecalis</th>
-<th align="right">Mandrillus leucophaeus</th>
-<th align="right">Mesorhizobium australicum</th>
-<th align="right">Sphingobacterium sp. 1.A.4</th>
-<th align="right">Staphylococcus epidermidis</th>
-<th align="right">Ralstonia mannitolilytica</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>even_err</td>
-<td align="right">0.0333333</td>
-<td align="right">0.0166667</td>
-<td align="right">0.0166667</td>
-<td align="right">0.0166667</td>
-<td align="right">0.0333333</td>
-<td align="right">0.0333333</td>
-</tr>
-<tr class="even">
-<td>even_per</td>
-<td align="right">0.0333333</td>
-<td align="right">0.0166667</td>
-<td align="right">0.0166667</td>
-<td align="right">0.0166667</td>
-<td align="right">0.0333333</td>
-<td align="right">0.0333333</td>
-</tr>
-<tr class="odd">
-<td>stag_err</td>
-<td align="right">0.0592251</td>
-<td align="right">0.0711611</td>
-<td align="right">0.0691178</td>
-<td align="right">0.0663078</td>
-<td align="right">0.0434145</td>
-<td align="right">0.0408736</td>
-</tr>
-<tr class="even">
-<td>stag_per</td>
-<td align="right">0.0592251</td>
-<td align="right">0.0711611</td>
-<td align="right">0.0691178</td>
-<td align="right">0.0663078</td>
-<td align="right">0.0434145</td>
-<td align="right">0.0408736</td>
-</tr>
-</tbody>
-</table>
+#kable(syn_pct[, c(1:6)])</code></pre>
 <p><br> <br></p>
 </div>
 <div id="import-bracken-kraken2-results" class="section level2">
@@ -593,103 +490,16 @@ row.names(brep_counts) &lt;- brep_counts$sample
 brep_counts$sample &lt;- NULL
 brep_counts[is.na(brep_counts)] &lt;- 0
 row.names(brep_counts) &lt;- paste0(row.names(brep_counts), &quot;_br&quot;)
-dim(brep_counts) # 8 5366</code></pre>
-<pre><code>## [1]    8 5366</code></pre>
-<pre class="r"><code># Convert to Relative Abundance
+#dim(brep_counts) # 8 5366
+
+# Convert to Relative Abundance
 brep_pct &lt;- decostand(brep_counts, method = &quot;total&quot;)
 
 # Order by abundance
 brep_pct &lt;- brep_pct[, order(colMeans(brep_pct), decreasing = T)]
 
 # Check data
-kable(brep_pct[, c(1:6)])</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">Homo sapiens</th>
-<th align="right">Lactobacillus fermentum</th>
-<th align="right">Salmonella enterica</th>
-<th align="right">Escherichia coli</th>
-<th align="right">Pseudomonas aeruginosa</th>
-<th align="right">Listeria monocytogenes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>sample1_br</td>
-<td align="right">0.0722376</td>
-<td align="right">0.1643045</td>
-<td align="right">0.1354720</td>
-<td align="right">0.1187102</td>
-<td align="right">0.0623060</td>
-<td align="right">0.1010660</td>
-</tr>
-<tr class="even">
-<td>sample2_br</td>
-<td align="right">0.0182907</td>
-<td align="right">0.1760192</td>
-<td align="right">0.1529426</td>
-<td align="right">0.1389259</td>
-<td align="right">0.0699399</td>
-<td align="right">0.1071486</td>
-</tr>
-<tr class="odd">
-<td>sample3_br</td>
-<td align="right">0.0722376</td>
-<td align="right">0.1643045</td>
-<td align="right">0.1354720</td>
-<td align="right">0.1187102</td>
-<td align="right">0.0623060</td>
-<td align="right">0.1010660</td>
-</tr>
-<tr class="even">
-<td>sample4_br</td>
-<td align="right">0.0604164</td>
-<td align="right">0.1232946</td>
-<td align="right">0.1344693</td>
-<td align="right">0.1045271</td>
-<td align="right">0.0616600</td>
-<td align="right">0.0872228</td>
-</tr>
-<tr class="odd">
-<td>sample5_br</td>
-<td align="right">0.1191714</td>
-<td align="right">0.0000003</td>
-<td align="right">0.0000389</td>
-<td align="right">0.0000950</td>
-<td align="right">0.0652800</td>
-<td align="right">0.0000044</td>
-</tr>
-<tr class="even">
-<td>sample6_br</td>
-<td align="right">0.1190907</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000227</td>
-<td align="right">0.0000901</td>
-<td align="right">0.0675425</td>
-<td align="right">0.0000047</td>
-</tr>
-<tr class="odd">
-<td>sample7_br</td>
-<td align="right">0.1685095</td>
-<td align="right">0.0000003</td>
-<td align="right">0.0000346</td>
-<td align="right">0.0000517</td>
-<td align="right">0.0153391</td>
-<td align="right">0.0000037</td>
-</tr>
-<tr class="even">
-<td>sample8_br</td>
-<td align="right">0.1677246</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000187</td>
-<td align="right">0.0000540</td>
-<td align="right">0.0168036</td>
-<td align="right">0.0000029</td>
-</tr>
-</tbody>
-</table>
+#kable(brep_pct[, c(1:6)])</code></pre>
 <p><br> <br></p>
 </div>
 <div id="import-ganon-results" class="section level2">
@@ -712,103 +522,16 @@ row.names(gan_counts) &lt;- gan_counts$sample
 gan_counts$sample &lt;- NULL
 gan_counts[is.na(gan_counts)] &lt;- 0
 row.names(gan_counts) &lt;- paste0(row.names(gan_counts), &quot;_gan&quot;)
-dim(gan_counts) # 8 3450</code></pre>
-<pre><code>## [1]    8 3450</code></pre>
-<pre class="r"><code># Convert to Relative Abundance
+#dim(gan_counts) # 8 3450
+
+# Convert to Relative Abundance
 gan_pct &lt;- decostand(gan_counts, method = &quot;total&quot;)
 
 # Order by abundance
 gan_pct &lt;- gan_pct[, order(colMeans(gan_pct), decreasing = T)]
 
 # Check data
-kable(gan_pct[, c(1:6)])</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">Lactobacillus fermentum</th>
-<th align="right">Listeria monocytogenes</th>
-<th align="right">Salmonella enterica</th>
-<th align="right">Enterococcus faecalis</th>
-<th align="right">Alcaligenes faecalis</th>
-<th align="right">Moraxella osloensis</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>sample1_gan</td>
-<td align="right">0.2881820</td>
-<td align="right">0.1743708</td>
-<td align="right">0.1580712</td>
-<td align="right">0.1140167</td>
-<td align="right">0.0002860</td>
-<td align="right">0.0000221</td>
-</tr>
-<tr class="even">
-<td>sample2_gan</td>
-<td align="right">0.2856433</td>
-<td align="right">0.1708909</td>
-<td align="right">0.1693516</td>
-<td align="right">0.1051977</td>
-<td align="right">0.0003631</td>
-<td align="right">0.0001242</td>
-</tr>
-<tr class="odd">
-<td>sample3_gan</td>
-<td align="right">0.2881820</td>
-<td align="right">0.1743708</td>
-<td align="right">0.1580712</td>
-<td align="right">0.1140167</td>
-<td align="right">0.0002860</td>
-<td align="right">0.0000221</td>
-</tr>
-<tr class="even">
-<td>sample4_gan</td>
-<td align="right">0.2259734</td>
-<td align="right">0.1576569</td>
-<td align="right">0.1609495</td>
-<td align="right">0.0971979</td>
-<td align="right">0.0005950</td>
-<td align="right">0.0000757</td>
-</tr>
-<tr class="odd">
-<td>sample5_gan</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000004</td>
-<td align="right">0.0000065</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0690810</td>
-<td align="right">0.1055499</td>
-</tr>
-<tr class="even">
-<td>sample6_gan</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000078</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0691389</td>
-<td align="right">0.1056169</td>
-</tr>
-<tr class="odd">
-<td>sample7_gan</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000112</td>
-<td align="right">0.0000004</td>
-<td align="right">0.1194713</td>
-<td align="right">0.0675964</td>
-</tr>
-<tr class="even">
-<td>sample8_gan</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000000</td>
-<td align="right">0.0000151</td>
-<td align="right">0.0000000</td>
-<td align="right">0.1195075</td>
-<td align="right">0.0676703</td>
-</tr>
-</tbody>
-</table>
+#kable(gan_pct[, c(1:6)])</code></pre>
 <p><br> <br></p>
 </div>
 <div id="import-centrifuge-results" class="section level2">
@@ -834,103 +557,16 @@ row.names(cent_counts) &lt;- cent_counts$sample
 cent_counts$sample &lt;- NULL
 cent_counts[is.na(cent_counts)] &lt;- 0
 row.names(cent_counts) &lt;- paste0(row.names(cent_counts), &quot;_cent&quot;)
-dim(cent_counts) # 8 6119</code></pre>
-<pre><code>## [1]    8 6119</code></pre>
-<pre class="r"><code># Convert to Relative Abundance
+#dim(cent_counts) # 8 6119
+
+# Convert to Relative Abundance
 cent_pct &lt;- decostand(cent_counts, method = &quot;total&quot;)
 
 # Order by abundance
 cent_pct &lt;- cent_pct[, order(colMeans(cent_pct), decreasing = T)]
 
 # Check data
-kable(cent_pct[, c(1:6)])</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">Homo sapiens</th>
-<th align="right">Lactobacillus fermentum</th>
-<th align="right">Listeria monocytogenes</th>
-<th align="right">Salmonella enterica</th>
-<th align="right">Enterococcus faecalis</th>
-<th align="right">Alcaligenes faecalis</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>sample1_cent</td>
-<td align="right">0.1224718</td>
-<td align="right">0.2622438</td>
-<td align="right">0.1608562</td>
-<td align="right">0.1163070</td>
-<td align="right">0.1052551</td>
-<td align="right">0.0003150</td>
-</tr>
-<tr class="even">
-<td>sample2_cent</td>
-<td align="right">0.0344582</td>
-<td align="right">0.2962357</td>
-<td align="right">0.1789922</td>
-<td align="right">0.1405057</td>
-<td align="right">0.1105359</td>
-<td align="right">0.0004731</td>
-</tr>
-<tr class="odd">
-<td>sample3_cent</td>
-<td align="right">0.1224718</td>
-<td align="right">0.2622438</td>
-<td align="right">0.1608562</td>
-<td align="right">0.1163070</td>
-<td align="right">0.1052551</td>
-<td align="right">0.0003150</td>
-</tr>
-<tr class="even">
-<td>sample4_cent</td>
-<td align="right">0.1030041</td>
-<td align="right">0.1931445</td>
-<td align="right">0.1366424</td>
-<td align="right">0.1097844</td>
-<td align="right">0.0842205</td>
-<td align="right">0.0007813</td>
-</tr>
-<tr class="odd">
-<td>sample5_cent</td>
-<td align="right">0.1531038</td>
-<td align="right">0.0000126</td>
-<td align="right">0.0000126</td>
-<td align="right">0.0000345</td>
-<td align="right">0.0000053</td>
-<td align="right">0.0533062</td>
-</tr>
-<tr class="even">
-<td>sample6_cent</td>
-<td align="right">0.1534780</td>
-<td align="right">0.0000103</td>
-<td align="right">0.0000134</td>
-<td align="right">0.0000404</td>
-<td align="right">0.0000073</td>
-<td align="right">0.0535282</td>
-</tr>
-<tr class="odd">
-<td>sample7_cent</td>
-<td align="right">0.2284607</td>
-<td align="right">0.0000121</td>
-<td align="right">0.0000089</td>
-<td align="right">0.0000339</td>
-<td align="right">0.0000089</td>
-<td align="right">0.0993442</td>
-</tr>
-<tr class="even">
-<td>sample8_cent</td>
-<td align="right">0.2280644</td>
-<td align="right">0.0000115</td>
-<td align="right">0.0000065</td>
-<td align="right">0.0000348</td>
-<td align="right">0.0000111</td>
-<td align="right">0.0995740</td>
-</tr>
-</tbody>
-</table>
+#kable(cent_pct[, c(1:6)])</code></pre>
 <p><br> <br></p>
 <div id="combine-relative-abundance-data-from-all-samples-for-comparison" class="section level3">
 <h3>Combine relative abundance data from all samples for comparison</h3>
