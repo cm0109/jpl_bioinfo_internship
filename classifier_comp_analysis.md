@@ -116,7 +116,7 @@ my_read_txt <- function(x, n, h) {
 
 
 ```r
-zymo_mmc_levels <- read.delim("zymo_mmc_logII.txt", sep = "\t", quote = "", stringsAsFactors = FALSE)
+zymo_mmc_levels <- read.delim("data/zymo_mmc_logII.txt", sep = "\t", quote = "", stringsAsFactors = FALSE)
 zymo_pct <- zymo_mmc_levels
 colnames(zymo_pct) <- c("Var1", "Var2", "value") # For combining with others down the line
 ```
@@ -127,8 +127,8 @@ colnames(zymo_pct) <- c("Var1", "Var2", "value") # For combining with others dow
 
 
 ```r
-meta <- read_excel("pipeline_comp_meta.xlsx")
-sample_desc <- read_excel("sample_desc.xlsx")
+meta <- read_excel("data/pipeline_comp_meta.xlsx")
+sample_desc <- read_excel("data/sample_desc.xlsx")
 #kable(sample_desc, caption = "Sample Details")
 ```
 
@@ -155,10 +155,10 @@ Samples 6 & 8 are "perfect" samples, while 5 & 7 are made to replicate how seque
 
 ```r
 # Input synthetic reads
-syn.tax <- read.delim("target-genome-info.tsv", sep = "\t", quote = "", stringsAsFactors = FALSE)
+syn.tax <- read.delim("data/target-genome-info.tsv", sep = "\t", quote = "", stringsAsFactors = FALSE)
 
 # List all files in the bracken_out directory
-syn_files <- list.files(path="synthetic_samples", pattern="*.tsv", full.names=TRUE)
+syn_files <- list.files(path="data/synthetic_samples", pattern="*.tsv", full.names=TRUE)
 
 # Load tables & clean columns
 syn.m <- bind_rows(lapply(syn_files, my_read_txt, 8, FALSE)) # apply the custom txt reading function to each file, and bind the list by row
@@ -192,7 +192,7 @@ syn_pct <- syn_pct[, order(colMeans(syn_pct), decreasing = T)]
 # Inpput Kracken2/Bracken results
 
 # List all files in the bracken_out directory
-brep_files <- list.files(path="bracken_out", pattern="*.txt", full.names=TRUE) 
+brep_files <- list.files(path="data/bracken_out", pattern="*.txt", full.names=TRUE) 
 brep.m <- bind_rows(lapply(brep_files, my_read_txt, 7, TRUE)) # apply the custom txt reading function to each file, and bind the list by row
 
 # Make species counts table for Bracken estimates
@@ -223,13 +223,14 @@ brep_pct <- brep_pct[, order(colMeans(brep_pct), decreasing = T)]
 
 ```r
 # List all files in the bracken_out directory
-gan_files <- list.files(path="ganon_out", pattern="*.txt", full.names=TRUE)
+gan_files <- list.files(path="data/ganon_out", pattern="*.txt", full.names=TRUE)
 gan_files
 ```
 
 ```
-## [1] "ganon_out/sample1_ganon_species.txt" "ganon_out/sample2_ganon_species.txt" "ganon_out/sample3_ganon_species.txt" "ganon_out/sample4_ganon_species.txt"
-## [5] "ganon_out/sample5_ganon_species.txt" "ganon_out/sample6_ganon_species.txt" "ganon_out/sample7_ganon_species.txt" "ganon_out/sample8_ganon_species.txt"
+## [1] "data/ganon_out/sample1_ganon_species.txt" "data/ganon_out/sample2_ganon_species.txt" "data/ganon_out/sample3_ganon_species.txt"
+## [4] "data/ganon_out/sample4_ganon_species.txt" "data/ganon_out/sample5_ganon_species.txt" "data/ganon_out/sample6_ganon_species.txt"
+## [7] "data/ganon_out/sample7_ganon_species.txt" "data/ganon_out/sample8_ganon_species.txt"
 ```
 
 ```r
@@ -267,14 +268,15 @@ gan_pct <- gan_pct[, order(colMeans(gan_pct), decreasing = T)]
 
 ```r
 # List all files in the directory
-cent_files <- list.files(path="cent_out", pattern="*.txt", full.names=TRUE)
+cent_files <- list.files(path="data/cent_out", pattern="*.txt", full.names=TRUE)
 cent_files
 ```
 
 ```
-## [1] "cent_out/sample1_centrifuge_reformatted_out.txt" "cent_out/sample2_centrifuge_reformatted_out.txt" "cent_out/sample3_centrifuge_reformatted_out.txt"
-## [4] "cent_out/sample4_centrifuge_reformatted_out.txt" "cent_out/sample5_centrifuge_reformatted_out.txt" "cent_out/sample6_centrifuge_reformatted_out.txt"
-## [7] "cent_out/sample7_centrifuge_reformatted_out.txt" "cent_out/sample8_centrifuge_reformatted_out.txt"
+## [1] "data/cent_out/sample1_centrifuge_reformatted_out.txt" "data/cent_out/sample2_centrifuge_reformatted_out.txt"
+## [3] "data/cent_out/sample3_centrifuge_reformatted_out.txt" "data/cent_out/sample4_centrifuge_reformatted_out.txt"
+## [5] "data/cent_out/sample5_centrifuge_reformatted_out.txt" "data/cent_out/sample6_centrifuge_reformatted_out.txt"
+## [7] "data/cent_out/sample7_centrifuge_reformatted_out.txt" "data/cent_out/sample8_centrifuge_reformatted_out.txt"
 ```
 
 ```r
@@ -338,14 +340,8 @@ all_samples_comp_pct <- dcast(all_samples_comp.m, sample ~ species, sum, value.v
 row.names(all_samples_comp_pct) <- all_samples_comp_pct$sample
 all_samples_comp_pct$sample <- NULL
 all_samples_comp_pct[is.na(all_samples_comp_pct)] <- 0
-dim(all_samples_comp_pct) # 37 6779
-```
+#dim(all_samples_comp_pct) # 37 6779
 
-```
-## [1]   29 6779
-```
-
-```r
 # Calculate distance
 all_samples.dist <- vegdist(all_samples_comp_pct, method = "bray")
 all_samples.dist.m <- melt.dist(all_samples.dist)
@@ -399,7 +395,7 @@ set.seed(1234);ggplot(same_samp_dist_synth, aes(type2, dist)) + geom_boxplot(lwd
 ![](classifier_comp_analysis_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 ```r
-ggsave(file="pipeline_accuracy_comp.pdf", width = 8, height = 6, units = "in")
+ggsave(file="output/pipeline_accuracy_comp.pdf", width = 8, height = 6, units = "in")
 ```
 
 <br>
@@ -432,7 +428,7 @@ sample1234_pct_zym.m$sample <- meta$sample[match(sample1234_pct_zym.m$name, meta
 sample1234_pct_zym.m$type <- meta$type[match(sample1234_pct_zym.m$name, meta$name)]
 
 # Add sample details
-sample1_4_desc <- read_excel("sample1_4_desc.xlsx")
+sample1_4_desc <- read_excel("data/sample1_4_desc.xlsx")
 sample1234_pct_zym.m$desc <- sample1_4_desc$details[match(sample1234_pct_zym.m$sample, sample1_4_desc$sample)]
 
 # For labels
@@ -455,7 +451,6 @@ ggplot(sample1234_pct_zym.m, aes(type, pct)) + facet_grid(~desc, scales="free_x"
   scale_fill_manual(values=c(posctrl_colors(ncol(sample1234_pct_zym)-1), "grey50")) + 
   labs(x="", y ="Relative Abundance%\n", fill="", title = "Taxonomic Comparison: MMC Samples\n") + 
   scale_y_continuous(expand=c(0,1)) + guides(fill=guide_legend(ncol=1)) + theme_bw() +
-  #annotate("text", )
   geom_text(data=sample1234_pct_zym.m_oth, aes(label=paste0(round(pct,1), "%"), y=2), size=3, color="white") +
   theme(axis.text.x = element_text(size=12, face="bold", color = "black", angle=90, hjust = 1, vjust=0.5), legend.position = "right", panel.grid = element_blank(),
         legend.text = element_text(face="italic"), axis.text.y = element_text(size=10, face="bold", color = "black"), 
@@ -466,7 +461,7 @@ ggplot(sample1234_pct_zym.m, aes(type, pct)) + facet_grid(~desc, scales="free_x"
 <img src="classifier_comp_analysis_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 ```r
-ggsave(file="sample1234_relabs_sp_zym.pdf", width = 12, height = 6, units = "in")
+ggsave(file="output/sample1234_relabs_sp_zym.pdf", width = 12, height = 6, units = "in")
 ```
 
 <br>
@@ -476,7 +471,7 @@ ggsave(file="sample1234_relabs_sp_zym.pdf", width = 12, height = 6, units = "in"
 
 
 ```r
-resource_comp <- read_excel("resource_comp.xlsx")
+resource_comp <- read_excel("data/resource_comp.xlsx")
 resource_comp.m <- melt(resource_comp)
 ```
 
@@ -487,7 +482,8 @@ resource_comp.m <- melt(resource_comp)
 
 ```r
 ggplot(resource_comp.m, aes(Tool, value)) + geom_bar(stat = "identity", position = "dodge", aes(fill=Tool), col="black", lwd=0.2) + 
-  facet_wrap(~variable, scales="free_y") + labs(x="", y ="", fill="", title = "Resource Usage Comparison\n") + scale_y_continuous(expand=c(0.01,0.01)) + theme_bw() +
+  facet_wrap(~variable, scales="free_y", ncol = 4) + 
+  labs(x="", y ="", fill="", title = "Resource Usage Comparison\n") + scale_y_continuous(expand=c(0.01,0.01)) + theme_bw() +
   theme(axis.text.x = element_text(size=12, face="bold", color = "black", angle=90, hjust = 1, vjust=0.5), legend.position = "Na", panel.grid = element_blank(),
         legend.text = element_text(face="italic"), axis.text.y = element_text(size=10, face="bold", color = "black"),
         strip.text = element_text(size=10, face="bold", color = "black"), plot.title = element_text(size=14, face="bold", hjust = 0.5),
@@ -497,7 +493,7 @@ ggplot(resource_comp.m, aes(Tool, value)) + geom_bar(stat = "identity", position
 <img src="classifier_comp_analysis_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 ```r
-ggsave(file="resource_use_comp.pdf", width = 12, height = 6, units = "in")
+ggsave(file="output/resource_use_comp.pdf", width = 16, height = 6, units = "in")
 ```
 
 
