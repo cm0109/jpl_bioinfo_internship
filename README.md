@@ -26,7 +26,7 @@ https://ndownloader.figshare.com/files/24079451
 tar -xzvf metagenomic-read-files.tar.gz
 ```
 
-# Make a copy of the files and then unzip R1 to count how many reads
+## Make a copy of the files and then unzip R1 to count how many reads
 
 find . -name "*_R1*"  -exec gunzip {} \;
 find . -type f -name "*_R1*" | sort -n | xargs grep -c "@" > fastq_read_counts.txt
@@ -357,3 +357,6 @@ scp -r cmicro@129.114.17.69:/home/cmicro/ganon_all/ganon_out \
 
 <br>
 <br>
+
+## Data Analysis
+All analysis performed in R. See: https://github.com/cm0109/jpl_bioinfo_internship/blob/master/classifier_comp_analysis.md
